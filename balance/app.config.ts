@@ -2,6 +2,24 @@ export default defineAppConfig({
     ui: {
         strategy: 'override',
         primary: 'purple',
+        input: {
+            rounded: 'rounded-[29px]',
+            default: {
+              color: 'gray',
+              variant: 'outline',
+            },
+            padding: {
+              sm: 'py-2 px-2',
+              md: 'py-2.5 px-[15px]',
+              xl: 'py-3 px-4.5',
+            },
+            color: {
+              gray: {
+                glass: 'bg-white/[0.08] disabled:ring-0 ring-1 ring-white/40 border-none outline-none focus:ring-1 focus:ring-blue-450',
+                outline: 'bg-gri-800 placeholder:text-gri-400 ring-1 ring-inset ring-gri-700 focus:ring-1 focus:ring-blue-450',
+              },
+            },
+          },
         button: {
             rounded: 'rounded-7.5',
             size: {
