@@ -5,13 +5,7 @@ export const MAX_TICK = -MIN_TICK
 export const MIN_SQRT_RATIO = 4295128739n
 export const MAX_SQRT_RATIO = 1461446703485210103287273052203988822378723970342n
 
-/**
- * @notice Calculates sqrt(1.0001^tick) * 2^96
- * @dev Throws if |tick| > max tick
- * @param {number} tick - The input tick for the above formula
- * @return {bigint} A Fixed point Q64.96 number representing the sqrt of the ratio of the two assets (token1/token0) at the given tick
- */
-export function getSqrtRatioAtTick(tick) {
+function getSqrtRatioAtTick(tick) {
   const absTick = tick < 0 ? BigInt(-tick) : BigInt(tick)
   if (absTick > BigInt(MAX_TICK))
     throw new Error('T')
@@ -62,16 +56,10 @@ export function getSqrtRatioAtTick(tick) {
   return BigInt((ratio >> 32n) + (ratio % (1n << 32n) === 0n ? 0n : 1n))
 }
 
-/**
- * @notice Calculates the greatest tick value such that getRatioAtTick(tick) <= ratio
- * @dev Throws in case sqrtPriceX96 < MIN_SQRT_RATIO, as MIN_SQRT_RATIO is the lowest value getRatioAtTick may ever return.
- * @param {bigint} sqrtPriceX96 - The sqrt ratio for which to compute the tick as a Q64.96
- * @return {number} The greatest tick for which the ratio is less than or equal to the input ratio
- */
-export function getTickAtSqrtRatio(sqrtPriceX96) {
-  if (sqrtPriceX96 < MIN_SQRT_RATIO || sqrtPriceX96 >= MAX_SQRT_RATIO)
+export function main(params: any) {
+  if (params.sqrtPriceX96 < MIN_SQRT_RATIO || params.sqrtPriceX96 >= MAX_SQRT_RATIO)
     throw new Error('R')
-  const ratio = BigInt(sqrtPriceX96) << 32n
+  const ratio = BigInt(params.sqrtPriceX96) << 32n
 
   let r = ratio
   let msb = 0
@@ -125,5 +113,5 @@ export function getTickAtSqrtRatio(sqrtPriceX96) {
   const tickLow = Number((log_sqrt10001 - 3402992956809132418596140100660247210n) >> 128n)
   const tickHi = Number((log_sqrt10001 + 291339464771989622907027621153398088495n) >> 128n)
 
-  return tickLow === tickHi ? tickLow : getSqrtRatioAtTick(tickHi) <= sqrtPriceX96 ? tickHi : tickLow
+  return tickLow === tickHi ? tickLow : getSqrtRatioAtTick(tickHi) <= params.sqrtPriceX96 ? tickHi : tickLow
 }

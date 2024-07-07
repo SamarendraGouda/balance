@@ -9,15 +9,16 @@ const priceRange = ref<string>('')
 const minPrice = ref<string>('')
 const maxPrice = ref<string>('')
 
-const price = asyncComputed(() => {
-  const { data } = $fetch('/api/price')
+const price = asyncComputed(async() => {
+  const data = await $fetch('/api/price')
   return data.wstETHInEth
 })
 
 watchEffect(() => {
+    console.log(price.value)
   if (price.value) {
-    minPrice.value = (price.value * (1 - Number(priceRange.value))).toFixed(3)
-    maxPrice.value = (price.value * (1 + Number(priceRange.value))).toFixed(3)
+    minPrice.value = (Number(price.value) * (1 - Number(priceRange.value))).toFixed(3)
+    maxPrice.value = (Number(price.value) * (1 + Number(priceRange.value))).toFixed(3)
   }
 })
 

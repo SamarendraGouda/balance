@@ -1,5 +1,7 @@
 <script setup>
-
+  defineProps({
+    position: Object,
+  })
 </script>
 
 <template>
@@ -39,7 +41,7 @@
           >
           <div class="flex flex-col items-end">
             <p>ETH (48%)</p>
-            <p>0.0000</p>
+            <p>{{position.amount0}}</p>
           </div>
         </div>
         <div
@@ -52,7 +54,7 @@
           >
           <div class="flex flex-col items-end">
             <p>wstETH (52%)</p>
-            <p>0.0000</p>
+            <p>{{position.amount1}}</p>
           </div>
         </div>
       </div>
@@ -60,15 +62,15 @@
       <div class="w-full px-2 text-sm">
         <div class="w-full flex justify-between items-center">
           <span class="text-white/40 font-medium">Min</span>
-          <span class="font-semibold">1.171 wstETH/ETH</span>
+          <span class="font-semibold">{{position.minPrice}} wstETH/ETH</span>
         </div>
         <div class="w-full flex justify-between items-center">
           <span class="text-white/40 font-medium">Max</span>
-          <span class="font-semibold">1.171 wstETH/ETH</span>
+          <span class="font-semibold">{{position.maxPrice}} wstETH/ETH</span>
         </div>
         <div class="w-full flex justify-between items-center">
           <span class="text-white/40 font-medium">Net Earnigs</span>
-          <span class="font-semibold">$1.56</span>
+          <span class="font-semibold">$0.000</span>
         </div>
       </div>
     </div>
